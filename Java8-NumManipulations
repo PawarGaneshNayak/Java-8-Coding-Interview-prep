@@ -1,0 +1,583 @@
+package java8coding;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class NumberManipulations {
+	
+	public static void main(String[] args) {
+		
+//1.Find max number using streams
+		
+		List<Integer> numberList = Arrays.asList(2, 3, 11, 4, 9, 7, 12 ,4, 6 , -1, -2, -9, -2 ,9, 1);
+		
+		//approac 1 using Comparator.reverseOrder()
+		Integer max1 = numberList.stream()
+			.sorted(Comparator.reverseOrder())
+			.findFirst().get();
+		
+//		System.err.println(max1);
+		
+		//approach 2 using max( Integer::compareTo )
+		Integer max2 = numberList.stream()
+			.max(Integer::compareTo)
+			.get();
+//		System.err.println(max2);
+		
+		//approach 3 using mapToInt().max();
+		 int max3 = numberList.stream()
+			.mapToInt(Integer::intValue)
+//			.mapToInt(n -> n)
+			.max()
+			.getAsInt();
+//		System.err.println(max3); 
+		
+		
+//2.Find min number
+		
+		
+		Integer min1 = numberList.stream()
+			.min(Integer::compareTo)
+			.get();
+		
+//		System.out.println(min1);
+		
+		Integer min2 = numberList.stream()
+			.sorted(Comparator.naturalOrder())
+			.findFirst()
+			.orElse(null);
+//		System.out.println(min2);
+		
+		Integer min3 = 
+				numberList.stream()
+					.mapToInt(Integer::intValue)
+					.min()
+					.getAsInt();
+//		System.out.println(min3);
+		
+		Integer min4 = numberList.stream()
+			.reduce( (n1, n2)->  n1<= n2 ? n1 : n2)
+			.get();
+		
+//		System.err.println(min4);
+
+		
+		 
+//3.Find second largest number
+		Integer secLargestNum1 =
+				
+				numberList.stream()
+					.distinct()
+					.sorted(Comparator.reverseOrder())
+					.skip(1)
+					.findFirst()
+					.orElse(null);
+		
+//		System.out.println(secLargestNum1);
+		
+		Integer secLargestNum2 =
+				
+				numberList.stream()
+					.distinct()
+					.sorted(( a, b) -> b - a) 
+					.skip(1)
+					.findFirst()
+					.orElse(null);
+		
+//		System.out.println(secLargestNum2);
+		
+		
+		
+//4.Find top 3 highest numbers
+		
+		List<Integer> top3HighestNumbers = 
+				
+				numberList.stream()
+					.distinct()
+					.sorted(Comparator.reverseOrder())
+					.limit(3)
+					.toList();
+//		System.out.println(top3HighestNumbers);
+		
+		
+				
+//5.Find duplicates in array
+		
+		List<Integer> duplicates = 
+				
+				numberList.stream()
+					.collect(Collectors.groupingBy(
+//							 n -> n,
+							 Function.identity(),
+							 Collectors.counting()
+							)
+					)
+					.entrySet()
+					.stream()
+					.filter(e -> e.getValue() > 1)
+					.map(Map.Entry::getKey)
+					.collect(Collectors.toList());
+		
+//		System.err.println("Duplicates : "+ duplicates);
+		
+// 6.Remove duplicates
+		
+		List<Integer> nonDuplicates =
+				
+				numberList.stream()
+					.collect( Collectors.groupingBy(
+							Function.identity(),
+//							LinkedHashMap::new,
+							Collectors.counting()
+							)
+					).entrySet()
+					.stream()
+//					.filter( e -> e.getValue() == 1)
+					.map(Map.Entry::getKey)
+//					.collect(Collectors.toList());
+					.toList();
+//		System.out.println(nonDuplicates);
+		
+		Set<Integer> set = new HashSet<>();
+		
+		List<Boolean> list = numberList.stream()
+			.map(n -> set.add(n))
+			.toList();
+		
+//		System.out.println(set);
+		
+		List<Integer> unique = numberList.stream()
+			.distinct()
+			.toList();
+		
+//		System.out.println(unique);
+		
+		
+//7.Find sum of elements
+		Integer sum =
+				numberList.stream()
+					.mapToInt(n -> n)
+					.sum();
+//		System.out.println(sum);
+		
+		Integer sum2 =
+				numberList.stream()
+//				.reduce( 0, ( a, b) -> a+b )
+//				.intValue();
+				.reduce((a,b) -> a+b)
+				.orElseThrow();
+		
+//		System.out.println(sum2);
+		
+		
+
+//8.Find average
+		
+		double avg =
+				numberList.stream()
+					.mapToInt(Integer::intValue)
+					.average()
+					.orElseThrow();
+//		System.out.println(avg);
+		
+		double avg2 =
+				numberList.stream()
+//					.reduce(0,(a,b) -> a+b)
+					.reduce(0,Integer::sum)	
+					/(double)numberList.size();
+		
+//		System.err.println(avg2);
+		
+		
+//		9.Count elements
+		long elementCount =
+				numberList.stream()
+				.count();
+//		System.out.println(elementCount);
+//		System.err.println(numberList.size());
+		
+	
+	
+//10.Sort numbers ascending
+		
+		List<Integer> sortedIntegers =
+				numberList.stream()
+//				.sorted(Comparator.naturalOrder())
+				.sorted(( a, b) -> a - b)
+//				.sorted()
+				.toList();
+//		System.out.println(sortedIntegers);
+		
+		
+		
+		
+//		🔥 Intermediate
+		
+//11.Sort numbers descending
+		
+		List<Integer> descSortedNumbers = 
+				
+				numberList.stream()
+//					.sorted(Comparator.reverseOrder())
+					.sorted( (a,b) -> b - a )
+					.toList();
+		
+//		System.out.println(descSortedNumbers);
+		
+	
+//12.Filter even numbers
+		
+		//approach 1 using filter
+		List<Integer> evenNumber =
+				
+				numberList.stream()
+					.filter( n -> n%2 == 0 )
+					.toList();
+//		System.err.println(evenNumber);
+		
+		//approach 2 using Collectors.partitioningBy().get(true );
+		
+		List<Integer> evenNumber2 =
+				numberList.stream()
+				 	.collect(Collectors.partitioningBy(n -> n%2 == 0 ))
+				 	.get(true);
+//		System.err.println(evenNumber2);
+		
+		
+		
+//13.Filter odd numbers
+		
+		//approach 1 using filter
+		List<Integer> oddNumbers =
+				numberList.stream()
+					.filter(n -> n%2 != 0)
+					.toList();
+//		System.out.println(oddNumbers);
+		
+		//approach 2 using Collectors.partitioningBy()
+		List<Integer> oddNumbers2 =
+				numberList.stream()
+					.collect( Collectors.partitioningBy( n -> n%2 == 0))
+					.get(false);
+		
+//		System.out.println(oddNumbers2);
+		
+		
+	
+//14.Find numbers greater than X
+		int X = 0;
+		
+		List<Integer> greaterThanX = 
+				numberList.stream()
+					.filter(n -> n > X)
+					.toList();
+//		System.out.println(greaterThanX);
+		
+//15.Find numbers divisible by N
+		int N = 3;
+		
+		List<Integer> divisibleByN =
+				numberList.stream()
+					.filter(n -> n % N == 0)
+					.toList();
+		
+//		System.err.println(divisibleByN);
+		
+		
+//16.Find missing number
+		
+		List<Integer> numbers = Arrays.asList(1, 2, 2, 4, 5, 6, 6); // missing 3
+		
+//		int n = numbers.get(numbers.size() -1);
+		
+//		int expectedSum = n*(n+1)/2;
+		
+		int actualSum = 
+				numbers.stream()
+					.distinct()
+					.mapToInt(Integer::intValue)
+					.sum();
+//		System.out.println("Missing Num : "+ (expectedSum - actualSum));
+		
+		
+		
+// 17.Find pair with given sum**************
+		
+		List<int[]> pairs = numberList.stream()
+			.flatMap( a -> numberList.stream()
+						   .filter(b -> a < b )
+						   .filter(b -> b != a && a+b == N)
+						   .map(b -> new int[] {a,b}))
+						   .toList();
+			
+//		pairs.forEach(p -> System.out.println("Pair: (" + p[0] + ", " + p[1] + ")"));
+		
+		
+		 List<Integer> numberList1 = Arrays.asList(1, 4, 5, 3, 2);
+	        int target = 7;
+
+	        Optional<int[]> pair = numberList1.stream()
+	                .flatMap(a -> numberList1.stream()
+	                        .filter(b -> a < b)            // avoids duplicates and self-pair
+	                        .filter(b -> a + b == target)  // sum check
+	                        .map(b -> new int[]{a, b}))
+	                .findFirst();                        // first matching pair
+
+//	        pair.ifPresent(p -> System.out.println("Pair found: (" + p[0] + ", " + p[1] + ")"));
+	        
+	        
+	        
+	
+//18.Find intersection of two arrays
+	        
+	        List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5,  5);
+	        List<Integer> list2 = Arrays.asList(3, 4, 5, 6, 7);
+	        
+	    List<Integer> intersectionList = 
+	        list1.stream()
+//	        	.filter(i -> list2.contains(i))
+	        	.filter(list2::contains)
+	        	.distinct()
+	        	.toList();
+	    
+//		System.err.println(intersectionList);
+		
+	
+//19.Merge two arrays
+		List<Integer> mergedArray = 
+				
+				Stream.concat(
+							list1.stream(), list2.stream()
+					)
+//					.distinct()
+//					.sorted()
+					.collect(Collectors.toList());
+		
+//		System.out.println(mergedArray);
+		
+		
+		List<Integer> mergedArray2 =  
+				Stream.of(list1, list2)
+					.flatMap(Collection::stream)
+					.toList();
+		
+//		System.out.println(mergedArray2);
+		
+
+		
+//		🔥 Advanced
+		
+		
+// 21.Find frequency of each number
+		Map<Integer, Long> frequencyMap = numberList.stream()
+			.collect(Collectors.groupingBy( 
+						Function.identity(),
+						LinkedHashMap::new,
+						Collectors.counting()
+					));
+		
+//		System.out.println(frequencyMap);
+		
+	
+//22.Find most frequent number
+		
+		Integer frequentNumber =
+			frequencyMap.entrySet()
+				.stream()
+				.max(Map.Entry.comparingByValue())
+				.map(Map.Entry::getKey)
+				.orElse(null);
+		
+//		System.err.println( frequentNumber );
+		
+		
+		Integer mostFrequent =
+				numberList.stream()
+					.collect(Collectors.groupingBy(
+								Function.identity(),
+								Collectors.counting()
+							)).entrySet()
+							.stream()
+							.max( Map.Entry.comparingByValue())
+							.map(Map.Entry::getKey)
+							.orElseThrow();
+//		System.out.println(mostFrequent);
+
+		
+//23.Find least frequent number
+		
+		Integer leastFrequent =
+				
+				numberList.stream()
+					.collect(Collectors.groupingBy( 
+								Function.identity(),
+								LinkedHashMap::new,
+								Collectors.counting()
+							)
+					).entrySet()
+					.stream()
+					.min(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse(null);
+		
+//		System.out.println(leastFrequent);
+		
+		
+	
+//24.Partition numbers into even/odd
+		
+	Map<Boolean, List<Integer>> partitionEvenOdd =
+			
+			numberList.stream()
+				.collect( Collectors.partitioningBy(n -> n%2 == 0));
+	
+//	System.out.println("Even : "+partitionEvenOdd.get(true));
+//	System.out.println("Odd : "+partitionEvenOdd.get(false));
+				
+				
+				
+//25.Find all primes in list
+	
+	
+				
+	List<Integer> primeList = 
+		numberList.stream()
+			.distinct()
+			.sorted()
+			.filter(NumberManipulations::isPrime)
+			.toList();
+				
+//	System.out.println(primeList);	
+	
+	
+//	List<Integer> primes = numberList.stream()
+//		    .filter(n -> n > 1 &&
+//		        java.util.stream.IntStream.rangeClosed(2, (int) Math.sqrt(n))
+//		            .noneMatch(i -> n % i == 0)
+//		    )
+//		    .toList();
+//
+//		System.out.println(primes);
+	
+//	public static boolean isPrime(int n) {
+//	    if (n <= 1) return false;        // 0,1 not prime
+//	    if (n == 2) return true;         // 2 is prime
+//	    if (n % 2 == 0) return false;   // eliminate even numbers
+//
+//	    for (int i = 3; i * i <= n; i += 2) { // check till √n
+//	        if (n % i == 0) return false;
+//	    }
+//	    return true;
+//	}
+	
+		List<Integer> primeNumbers = 
+				numberList.stream()
+					.distinct()
+					.sorted()
+					.filter(n -> 
+								n > 1 && 
+								IntStream.rangeClosed(2, (int)Math.sqrt(n))
+									.noneMatch(i -> n % i == 0)
+							).toList();
+		
+//		System.out.println(primeNumbers);
+		
+		
+		
+//26.Find squares of numbers
+		
+		List<Integer> sqrtNumbers = 
+				
+				numberList.stream()
+					.map(n -> n * n)
+					.toList();
+					
+//		System.err.println(sqrtNumbers);
+		
+		
+		
+//27.Find cubes of numbers
+		
+		List<Integer> cubicNumbers = 
+				
+				numberList.stream()
+					.map(n -> n * n * n)
+					.toList();
+//		System.err.println(cubicNumbers);
+		
+		
+//28.Find product using reduce
+		
+		Integer product = numberList.stream()
+			.reduce(1, (x,y) -> x*y);
+//		System.out.println(product);
+		
+		
+		
+//29.Generate random numbers using streams
+		
+		Random random = new Random();
+		
+		List<Integer> randomList = Stream.generate(() -> random.nextInt(1000))
+			.limit(5)
+			.toList();
+		
+//		System.out.println(randomList);
+		
+		
+//30.Generate infinite stream of numbers
+		//1
+		Stream<Integer> iterate = Stream.iterate(1, n -> n + 1);
+		//2
+		Stream<Integer> randomList1 = Stream.generate(() -> random.nextInt(1000));
+		
+
+		
+		
+		
+		
+		
+		
+	}
+	
+	private static boolean isPrime(Integer n) {
+		
+		if( n <= 1) return false; // 0 or 1 or negative not primes
+		
+		if( n == 2) return true;  // 2 is prime
+		
+		if( n%2 == 0) return false; // eliminate all even numbers
+		
+		for( int i = 3; i*i <= n; i+=2) { //starts from 3 & avoid even number already checked above 
+			
+			if( n % i == 0) return false;
+		}
+		
+		return true;
+		
+	}
+	
+//	public static boolean isPrime(int n) {
+//        if (n <= 1) return false;
+//        if (n == 2) return true;
+//        if ((n & 1) == 0) return false; // faster even check
+//
+//        int limit = (int) Math.sqrt(n);
+//        return java.util.stream.IntStream.rangeClosed(3, limit)
+//                .filter(i -> (i & 1) == 1)     // only odd divisors
+//                .noneMatch(i -> n % i == 0);
+//    }
+
+}
