@@ -1,0 +1,431 @@
+package java8coding;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class StringManipulations {
+	
+	
+	public static void main(String[] args) {
+		
+//		🔥 Core (Very High Frequency)
+//1.Find first non-repeating character in a String using streams
+		
+		String str ="JJvavaPprograming";
+		
+		Map<Character, Long> frequecyMap = str.chars()
+			.mapToObj(ch -> (char) ch)
+			.collect(Collectors.groupingBy(
+						ch -> ch,
+						LinkedHashMap::new,
+						Collectors.counting()					
+					));
+		
+		Character firstNonRepeatingChar = frequecyMap.entrySet().stream()
+			.filter(e -> e.getValue() == 1)
+//			.filter(e -> e.getKey() != ' ')
+			.map(Map.Entry::getKey)
+			.findFirst()
+			.orElse(null);
+		
+//		System.out.println(firstNonRepeatingChar);
+		
+		
+		
+//2.Find first repeating character
+		
+		Character firstRepeatedChar = frequecyMap.entrySet().stream()
+		.filter( e -> e.getValue() > 1)
+		.map(Map.Entry::getKey)
+		.findFirst()
+		.orElse(null);
+		
+//		System.out.println(firstRepeatedChar);
+		
+		
+//3.Count frequency of each character
+//		System.out.println(frequecyMap);
+		
+		
+		
+//4.Check if two strings are anagrams (using streams)
+		
+		String str1 = "listen";
+        String str2 = "silent";
+        
+        boolean isAnagram = 
+                str1.length() == str2.length() &&
+                str1.chars()
+                    .sorted()
+                    .mapToObj(c -> (char) c)
+                    .collect(Collectors.toList())
+                    .equals(
+                        str2.chars()
+                            .sorted()
+                            .mapToObj(c -> (char) c)
+                            .collect(Collectors.toList())
+                    );
+        
+//        System.out.println(isAnagram);
+        
+        
+//5.Reverse a string using streams
+        
+        //approach 1 - Wrong Approach *******************
+//		String reversedString = 
+//				str.chars()
+//						.mapToObj(c -> (char) c)
+//						.sorted(Comparator.comparing(Character::valueOf).reversed())
+//						.map(String::valueOf)
+//						.collect(Collectors.joining());
+//
+//		System.err.println(reversedString);
+		
+		//approach2
+		String reversedString2 = IntStream.range(0, str.length())
+			.mapToObj(i -> str.charAt( str.length() -i -1))
+			.map(String::valueOf)
+			.collect(Collectors.joining());
+		
+//		System.err.println(reversedString2);
+		
+		//approach 3 using reduce.
+		
+		Optional<String> reduceString = str.chars()
+			.mapToObj(c -> (char)c)
+			.map(String::valueOf)
+			.reduce((a,b) -> b+a );
+//		System.out.println(reduceString.get());
+		
+		
+//6.Remove duplicate characters from string
+		// String str ="JJvavaPprograming";
+		
+		 Map<Character, Long> freqMap = str.chars()
+			.mapToObj(c -> (char)c)
+			.collect(Collectors.groupingBy(
+					ch -> ch,
+					LinkedHashMap::new,
+					Collectors.counting()
+					));
+		String nonRepatedString = freqMap.entrySet().stream()
+				.filter(ch -> ch.getValue() == 1)
+				.map(Map.Entry::getKey)
+				.map(String::valueOf)
+		.collect(Collectors.joining());
+		
+//		System.out.println(nonRepatedString);
+		
+		
+//7.Find all duplicate characters
+		// String str ="JJvavaPprograming";
+		
+		String duplicationCharInString = str.chars()
+			.mapToObj(c -> (char)c)
+			.collect(Collectors.groupingBy(
+					ch -> ch,
+					LinkedHashMap::new,
+					Collectors.counting()
+					))
+			.entrySet()
+			.stream()
+			.filter(e -> e.getValue()>1)
+			.map(Map.Entry::getKey)
+			.map(String::valueOf)
+			.collect(Collectors.joining());
+//		System.out.println(duplicationCharInString);
+		
+		
+//		8.Sort characters in string
+		
+		String s = "bacdegf";
+		
+		String sortedCharInString = 
+				
+					s.chars()
+						.sorted()
+						.mapToObj(c -> String.valueOf((char)c))
+				//		.map(String::valueOf)
+						.collect(Collectors.joining());
+		
+//		System.out.println(sortedCharInString);
+		
+		
+//9.Convert string to character stream
+		
+		//approach 1
+		Stream<Character> streamOfChar1 = s.chars()
+			.mapToObj(c -> (char)c);
+		
+		//approach 2
+		Stream<Character> streamOfChar2 = IntStream.range(0,s.length())
+//			.mapToObj(s::charAt);
+//			.mapToObj(c -> (char)c);
+			.mapToObj(i -> str.charAt(i));
+		
+		
+		
+//10.Count vowels and consonants
+		
+		long vowelsCount =
+				s.toLowerCase().chars()
+					.mapToObj(c -> (char)c )
+					.filter(c -> "aeiouAEIOU".indexOf(c) !=-1)
+//					.filter(c -> "aeiou".indexOf(Character.toLowerCase(c)) != -1)
+					.count();
+		
+//		System.err.println(vowelsCount);
+		
+		
+//		Consonents count
+		
+		 long consonentCount = 
+				 s.toLowerCase()
+				 	.chars()
+						.mapToObj(c -> (char)c)
+						.filter(Character::isLetter)
+						.filter(c -> "aeiou".indexOf(c) == -1)
+						.count();
+//		System.out.println(consonentCount);
+		
+		
+		
+		
+		
+		
+		
+		
+//		🔥 Intermediate
+		
+		
+//11.Find longest word in sentence		
+		
+		String sentence = "Java programing with Spring Boot Microservices";
+		
+		//approach 1
+		List<String> asList = Arrays.asList(sentence.split("\\s+")); 
+		
+		String longestWord1 = asList.stream()
+			.max(Comparator.comparingInt(String::length))
+			.orElse(null);
+			
+//		System.out.println(longestWord1);
+		
+		//approach 2 using reduce		
+		String longestWord2 = Arrays.asList(sentence.split("\\s+"))
+			.stream()
+			.reduce((w1, w2) -> w1.length() > w2.length() ? w1 : w2)
+			.orElse(null);
+//		System.err.println(longestWord2);
+		
+		
+//12.Find shortest word
+		
+		// approach 1 using reduce
+		String shortestWord1 = Arrays.asList(sentence.split("\\s+"))
+			.stream()
+			.reduce( (w1, w2) -> w1.length() > w2.length()? w2:w1)
+			.orElse(null);
+//		System.out.println(shortestWord1);
+		
+		//approach 2
+		String shortestWord2 = Arrays.asList(sentence.split("\\s+"))
+			.stream()
+			.min(Comparator.comparingInt(String::length))
+			.orElse(null);
+//		System.err.println(shortestWord2);
+		
+			
+//13.Reverse each word in a string ***********************
+		
+		//approach 1 using StringBuild.reverse() method
+		String reverseEachWord1 = Arrays.asList(sentence.split("\\s+"))
+			.stream()
+			.map( word -> new StringBuilder(word).reverse().toString())
+			.collect(Collectors.joining(" "));
+		
+//		System.out.println(reverseEachWord1);
+		
+		//approach 2 using reduce& seperate method
+		String reverseEachWord2 = 
+				
+			Arrays.asList(sentence.split("\\s+"))
+				.stream()
+				.map(StringManipulations::getReversed)
+				.collect(Collectors.joining(" "));
+		
+//		System.err.println(reverseEachWord2);
+		//Arrays.asList( sentence.split(" ") )
+		//.stream()
+		//.map( word -> IntStream.range( 0, word.length() )
+				 //.mapToObj(   i -> word.charAt(  word.length()-1-i  )    )
+				 //.map(String::valueOf)
+				 //.collect( Collectors.joining())
+			//).collect( Collectors.joining(" "));
+			
+	//Arrays.asList( sentence.split(" ") )
+		//.stream()
+		//.map( StringManipulations:: getReversed)
+		//.collect( Collectors.joining(" "));
+		
+	//Arrays.asList( sentence.split(" "))
+		//.stream()
+		//.map( word -> new StringBuilder( word ).reverse().toString())
+		//.collect( Collectors.joining(" ") );
+		
+		
+		
+//14.Check palindrome using streams
+		
+		//using allMatch()
+		String s1 = "madam";
+		
+		boolean isPalidrome = IntStream.range(0, s1.length()/2)
+		.allMatch(i ->  s1.charAt(i) == s1.charAt(s1.length() -1 -i));
+		
+//		System.out.println(isPalidrome);
+		
+		
+//16.Find all palindromes in sentence
+
+			String sentence2 = "madam racecar listen mam radar";
+		
+			 List<String> palindromeList1 = Arrays.asList(sentence2.split(" "))
+				.stream()
+				.filter(StringManipulations::checkPalidrome)
+				.collect(Collectors.toList());
+			
+//		System.out.println(palindromeList1);
+		
+//15. Find all palindromes in List of string
+		List<String> checkPalindrome = Arrays.asList("madam","racecar","listen", "java", "mam","radar", "silent");
+		
+		
+		List<String> palindromeList2 = 
+				checkPalindrome.stream()
+					.filter(word -> IntStream.range(0,  word.length()/2)
+							.allMatch(i -> word.charAt(i) == word.charAt(word.length() -i -1))
+					)
+					.collect(Collectors.toList());
+		
+//		System.err.println(palindromeList2);
+		
+		
+		
+//17.Group anagrams using streams
+		
+		List<String> words = Arrays.asList("eat", "tea", "tan", "ate", "nat", "bat");
+		
+		
+		Map<String, List<String>> grouped = 
+			words.stream()
+					.collect(Collectors.groupingBy(
+							word -> {
+									char[] chars = word.toCharArray();
+									Arrays.sort(chars);
+									return new String(chars); // key
+								}
+					));
+		
+//		System.out.println(grouped);
+//		System.out.println(grouped.values());
+		
+		
+		
+//18.Count words in sentence
+		long countOfWords = 
+		Arrays.asList(sentence.split(" "))  //from string
+//			words							//from list of string	
+			.stream()
+			.count();
+//		System.out.println(countOfWords);
+		
+		
+//19.Find most frequent character-- tricky
+		
+		
+		String freqString = "programmingpppp";
+		
+		Map<Character, Long> collect = freqString.chars()
+			.mapToObj(c -> (char)c)
+			.collect(Collectors.groupingBy(
+//					ch -> ch,
+					Function.identity(),
+					Collectors.counting()
+					));
+		
+		 Character mostFrequent = 
+				collect.entrySet()
+					.stream()
+					.max(Map.Entry.comparingByValue())
+					.get()
+					.getKey();
+//		 System.err.println(mostFrequent);
+		 
+					
+			
+	
+//20.Find least frequent character
+//		 String freqString = "Programmingpppp";
+		 
+		 Entry<Character, Long> entry = freqString.chars()
+		 	.mapToObj(c -> (char)c )
+		 	.collect(Collectors.groupingBy(
+//		 			c -> c ,
+		 			Function.identity(),
+		 			LinkedHashMap::new,
+		 			Collectors.counting()
+		 	)).entrySet()
+		 	.stream()
+		 	.min(Map.Entry.comparingByValue())
+		 	.get();
+//		System.out.println(entry.getKey() +" -> " + entry.getValue());
+		 
+		 
+		 
+				
+				
+		
+		
+		
+		
+		
+		
+        
+        
+        
+        
+        
+        
+		
+		
+	}
+	
+	private static String getReversed(String word) {
+//		return word.chars()
+//				.mapToObj(c -> (char)c)
+//				.map(String::valueOf)
+//				.reduce((a,b) -> b+a ).get();
+		
+		 return IntStream.range(0, word.length())
+			.mapToObj(i -> word.charAt(word.length() -1 -i))
+			.map(String::valueOf)
+			.collect(Collectors.joining());
+
+	}
+	
+	private static boolean checkPalidrome(String s) {
+		return IntStream.range(0, s.length()/2)
+			.allMatch(i -> s.charAt(i) == s.charAt(s.length() -1 - i));
+	}
+
+}
