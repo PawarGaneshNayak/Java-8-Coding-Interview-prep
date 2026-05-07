@@ -1,0 +1,322 @@
+EmployeeManagement -> should be done in the last
+
+1. All employees names who are belong their city
+2. All employees name, role, salary, dept belongs to the same city
+3. Department wise 3 Top paid employees names,salary
+4. Highest salary employe details
+4.1 Highest salary employe details in Both Gender male, female
+4.2 Highest salary employe name,salary in Both Gender male, female
+5. Print all the departments present
+6. Average salary of each Department
+7. Find all employee names
+8. Count employees
+9. Find employees names by department wise
+10. Average salary by department
+10.1 Max Salary by department wise
+10.2 Max salaray by Department wise along with name,sal
+11. Highest paid employee details
+11.1 Highest paid employee name
+12. Lowest paid employee details
+13. Top 3 highest paid employees details
+13.1 Top 3 highest paid employees names
+13.2 Top 3 highest paid employees names with salaries
+13.3 Department wise Top 3 highest paid employees details
+13.4 Department wise Top 3 highest paid employees name,salary
+13.5 Department wise Top 3 highest paid Girl employees with their name,salary
+14. Second highest salary employee
+14.1 Second highest salary employee details in all Gender
+14.2 Second highest salary employee name,salary in all Gender
+15. Department wise highest salary
+16. Sum of salaries department-wise
+17. Sort by name then salary
+18. Find duplicate employee names
+19. Group the employees by their names or /dept/roles/gender
+20. Count employees in each department
+20.1 Count Genderwise employeee in each department
+21. Partition employees by salary
+
+Additional Good Practice Questions You Can Add
+22. Find Lowest Salary Employee Department-wise
+23. Find Employees Having Salary Greater Than Average Salary
+24. Department-wise Average Salary with Employee Count
+25. Find Employees Grouped by Role
+26. Count Employees City-wise
+27. Find Distinct Cities
+28. Find Highest Paid Female Employee
+29. Find Highest Paid Employee in Each City
+30. Find Employees Joined by Names (Comma Separated)
+31. Convert Employee List to Map Using Employee ID
+32. Find Duplicate Cities
+33. Sort Employees by Salary Descending
+34. Find Employees Between Salary Range
+35. Find Department Having Maximum Employees
+36. Find Department Having Highest Average Salary
+37. Find City Having Highest Paid Employee
+38. Multi-level Grouping
+Department → Gender → Employees
+39. Role-wise Highest Salary Employee
+40. Department-wise Salary Statistics
+Min
+Max
+Avg
+Sum
+Count using Collectors.summarizingDouble()
+
+
+
+
+🔥 JAVA 8 CODING QUESTIONS (200+ MASTER LIST)
+🧠 1. STRING / CHARACTER MANIPULATION (MOST ASKED – 40)
+
+🔥 Core (Very High Frequency)
+1.Find first non-repeating character using streams
+2.Find first repeating character
+3.Count frequency of each character
+4.Check if two strings are anagrams (using streams)
+5.Reverse a string using streams
+6.Remove duplicate characters from string
+7.Find all duplicate characters
+8.Sort characters in string
+9.Convert string to character stream
+10.Count vowels and consonants
+🔥 Intermediate
+11.Find longest word in sentence
+12.Find shortest word
+13.Reverse each word in a string
+14.Check palindrome using streams
+15.Find all palindromes in list of strings
+16.Find all palindromes in sentence
+17.Group anagrams using streams
+18.Count words in sentence
+19.Find most frequent character
+20.Find least frequent character
+21.Replace all vowels with special char
+
+
+🔥 Advanced
+Find longest substring without repeating characters
+Find all substrings using streams
+Find all palindromic substrings
+Find longest palindrome substring
+Remove all special characters
+Normalize string (trim + lowercase)
+Check if string contains only digits
+Extract digits from string
+Extract alphabets from string
+Find kth non-repeating character
+🔥 Tricky / Edge
+Handle null string in streams
+Count uppercase/lowercase letters
+Find duplicate words in paragraph
+Remove whitespace using streams
+Join characters with delimiter
+Convert string to map of char → frequency
+Find common characters between two strings
+Check rotation of string
+Validate email format using streams
+Find longest prefix match
+
+
+
+📊 2. NUMBERS / ARRAYS / COLLECTIONS (45)
+🔥 Core
+1.Find max number using streams
+2.Find min number
+3.Find second largest number
+4.Find top 3 highest numbers
+5.Find duplicates in array
+6.Remove duplicates
+7.Find sum of elements
+8.Find average
+9.Count elements
+10.Sort numbers ascending
+🔥 Intermediate
+11.Sort numbers descending
+12.Filter even numbers
+13.Filter odd numbers
+14.Find numbers greater than X
+15.Find numbers divisible by N
+16.Find missing number
+17.Find pair with given sum*******************
+18.Find intersection of two arrays
+19.Merge two arrays
+20.Flatten nested list
+🔥 Advanced
+21.Find frequency of each number
+22.Find most frequent number
+23.Find least frequent number
+24.Partition numbers into even/odd
+25.Find all primes in list
+26.Find squares of numbers
+27.Find cubes of numbers
+28.Find product using reduce
+29.Generate random numbers using streams
+30.Generate infinite stream of numbers
+🔥 Tricky
+Handle null values in list
+Stream of primitive vs boxed
+Convert array to stream
+Convert stream to array
+Skip first N elements
+Limit to N elements
+Find kth largest element
+Find median
+Find mode
+Sliding window sum
+🔥 Real Use
+Paginate list using streams
+Batch process list
+Deduplicate DB records
+Filter invalid records
+Sort large dataset
+
+
+🔥 3. STREAM CORE CODING (40)
+🔥 Basic
+Convert list of strings to uppercase
+Convert to lowercase
+Map integers to squares
+Filter strings starting with "A"
+Count empty strings
+Find first element
+Find any element
+Check allMatch
+Check anyMatch
+Check noneMatch
+🔥 Intermediate
+Join strings using delimiter
+Convert list to set
+Convert list to map
+Handle duplicate keys in map *************************
+Sort list of objects
+Sort map by value
+Group elements
+Partition elements
+Count occurrences using groupingBy
+Find distinct elements
+🔥 Advanced
+Flatten nested collections
+Find top N elements
+Custom comparator sorting
+Multi-field sorting
+Group by multiple fields
+Nested grouping
+Downstream collectors
+Use collectingAndThen
+Use mapping collector
+Use summarizing statistics
+🔥 Expert
+Write custom collector
+Combine multiple collectors
+Immutable collection from stream
+Stream reuse handling
+Lazy evaluation demonstration
+Short-circuiting example
+Parallel stream conversion
+Debug using peek()
+Handle exceptions in streams
+Stream performance optimization
+
+
+
+🔁 4. MAP / REDUCE / COLLECT (25)
+Sum using reduce
+Product using reduce
+Max using reduce
+Min using reduce
+String concatenation using reduce
+Count using reduce
+Reduce vs collect comparison
+Identity in reduce
+Associative function example
+Reduce in parallel streams
+Collect to List
+Collect to Set
+Collect to Map
+Collect to TreeSet
+Collect to LinkedList
+Group using groupingBy
+Partition using partitioningBy
+Count using counting()
+Join using joining()
+Summarize using summarizingInt()
+Map transformation while collecting
+Filtering collector
+Collect distinct elements
+Collect top N
+Combine collectors
+
+
+
+🧵 5. LAMBDA / FUNCTIONAL INTERFACES (20)
+Sort list using lambda
+Comparator using lambda
+Predicate for filtering
+Function for transformation
+Consumer for printing
+Supplier for generating data
+Chain predicates
+Combine functions
+Custom functional interface
+Replace anonymous class
+Lambda with multiple params
+Lambda returning value
+Lambda with exception handling
+Method reference usage
+Static method reference
+Instance method reference
+Constructor reference
+Lambda with streams
+Lambda for grouping logic
+Lambda for validation
+
+
+
+⚡ 6. OPTIONAL (15)
+Return default using Optional
+Throw exception using Optional
+Optional.map() usage
+Optional.flatMap() usage
+Avoid NullPointerException
+Optional with streams
+Filter Optional values
+orElse vs orElseGet
+orElseThrow usage
+Combine Optionals
+Extract nested values
+Convert null to Optional
+Optional as return type
+Optional chaining
+Optional validation
+
+
+
+⚡ 7. PARALLEL STREAMS (10)
+Sum using parallel stream
+Sort using parallel stream
+Find max in parallel
+Compare sequential vs parallel
+Thread safety issue demo
+Parallel grouping
+Race condition example
+forEach vs forEachOrdered
+ForkJoinPool concept coding
+Performance comparison
+
+
+🧱 8. REAL BACKEND USE CASES (15)
+Process CSV file using streams
+Read file using Files.lines()
+Filter logs by level
+Count API hits per user
+Find most active user
+Group logs by date
+Detect duplicate API calls
+Convert Entity → DTO
+Batch processing logic
+Pagination using streams
+Fraud transaction detection
+Deduplicate user records
+Aggregate metrics (sum, avg)
+Transform nested JSON
+Build search filter
